@@ -12,13 +12,37 @@
         </head>
     {% endblock %}
 
-    <form action="{{ path('app_updateO') }}" method="post">
+    <form action="{{ path('app_save_user') }}" method="post">
 
         <div class="flex h-screen flex-col">
             <div class="mt-20 sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Reset mdp</h2>
             </div>
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+
+                <div>
+                    <label htmlFor="Username" className="block text-sm font-medium leading-6 text-gray-900">Username</label>
+                    <div className="mt-2">
+                        <input
+                                type=email
+                                placeholder="Enter your username"
+                                name="username"
+                        required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label htmlFor="Last name" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                    <div className="mt-2">
+                        <input
+                                type=text
+                                placeholder="Enter your Last name"
+                                name="email"
+                        required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                    </div>
+                </div>
 
                 <div class="mt-4">
                     <div class="flex items-center justify-between">
@@ -28,6 +52,17 @@
                     <div class="mt-2">
                         <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                type="password" name="pswd" id="password" autocomplete="current-password" required/>
+                    </div>
+                </div>
+
+                <div>
+                    <label htmlFor="Last name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
+                    <div class="mt-2">
+                        <select id="playlist-selector" class="appearance-none w-full bg-white border border-gray-200 px-7 py-3 rounded-md shadow transition">
+                            <option value="">Select a Role</option>
+                            <option value="ROLE_USER">USER</option>
+                            <option value="ROLE_ADMIN">ADMIN</option>
+                        </select>
                     </div>
                 </div>
 

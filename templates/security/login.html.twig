@@ -37,7 +37,7 @@
                             <label htmlFor="password" class="block text-sm font-medium leading-6 text-gray-900">
                                 Mot de passe</label>
                             <div class="text-sm">
-                                <a href="/ForgotPswd" class="font-semibold text-red-600 hover:text-red-300">
+                                <a class="font-semibold text-red-600 hover:text-red-300">
                                     Mot de passe oublie?</a>
                             </div>
                         </div>
@@ -54,6 +54,10 @@
                         </button>
 
                     </div>
+                <div class="text-sm">
+                    <a href="{{ path('app_mdpO') }}" class="font-semibold text-red-600 hover:text-red-300">
+                        Creat a User</a>
+                </div>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </div>
