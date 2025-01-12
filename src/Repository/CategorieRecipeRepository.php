@@ -16,6 +16,15 @@ class CategorieRecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, CategorieRecipe::class);
     }
 
+    public function findAllWhere(array $criteria): array
+    {
+        return $this
+            ->createQueryBuilder('cr')
+            ->where('cr.categorie = :value')
+            ->setParameter('value', $criteria['value'])
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return CategorieRecipe[] Returns an array of CategorieRecipe objects
     //     */

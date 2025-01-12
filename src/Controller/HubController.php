@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Repository\CategorieRecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 #[Route('/hub', name: 'app_hub-')]
@@ -25,36 +25,25 @@ class HubController extends AbstractController
             'ingredients' => $ingredient,
         ]);
     }
-    #[Route('/list', name: 'app_list')]
-    public function list(Request $request, EntityManagerInterface $entityManager, PlaylistMediaRepository $playlistMediaRepository, MediaRepository $mediaRepository): Response
+    #[Route('/categorie/{value}', name: 'app_list')]
+    public function list(CategorieRecipeRepository $repository, string $value): Response
     {
-        $playlists = $entityManager->getRepository(Playlist::class)->findAll();
-        $playlistSubscriptions = $entityManager->getRepository(PlaylistSubscription::class)->findAll();
-        $selectedPlaylistId = $request->query->get('selectedPlaylist');
-        $medias = [];
-        if ($selectedPlaylistId) {
-            $playlistMediaArray = $playlistMediaRepository->findAllMediaWhere(['value'=>$selectedPlaylistId]);
-            if ($playlistMediaArray) {
-                foreach ($playlistMediaArray as $playlistMedia) {
-                    $m = $playlistMedia->getMedia();
-                    $medias[] = [
-                        'id' => $m->getId(),
-                        'mediaType' => $m->getMediaType(),
-                        'title' => $m->getTitle(),
-                        'shortDescription' => $m->getShortDescription(),
-                        'longDescription' => $m->getLongDescription(),
-                        'releaseDate' => $m->getReleaseDate()->format('Y-m-d'),
-                        'coverImage' => $m->getCoverImage()
+        $recipes = [];
+            $array = $repository->findAllWhere(['value'=>$value]);
+            if ($array) {
+                foreach ($array as $cr) {
+                    $r = $cr->getRecipe();
+                    $recipes[] = [
+                        'id' => $r->getId(),
+                        'title' => $r->getTitle(),
+                        'description' => $r->getDescription(),
+                        'instruction' => $r->getInstruction()
                     ];
                 }
             }
-        }
 
-        return $this->render('hub/lists.html.twig', [
-            'playlists' => $playlists,
-            'playlistSubscriptions' => $playlistSubscriptions,
-            'selectedPlaylistId' => $selectedPlaylistId,
-            'medias' => $medias,
+        return $this->render('hub/categorie.html.twig', [
+            'recipes' => $recipes,
         ]);
     }
     #[Route('/detail/{value}', name: 'app_detail')]

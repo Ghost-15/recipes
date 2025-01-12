@@ -13,6 +13,9 @@
         </head>
     {% endblock %}
 
+{#    {% for role in app.user.roles %}#}
+{#        {{ role }}#}
+{#    {% endfor %}#}
     {% if is_granted('ROLE_BANNER') %}
             <section>
                 <div class="flex items-center justify-between">
