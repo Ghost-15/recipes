@@ -1,0 +1,85 @@
+{% extends 'hub/base.html.twig' %}
+
+{% block content %}
+    <html lang="fr">
+
+    {% block title%}
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Recipe</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+    {% endblock %}
+
+    {% if is_granted('ROLE_BANNER') %}
+            <section>
+                <div class="flex items-center justify-between">
+                    <h1>ACCESS DENIED BITCH !!!</h1>
+                </div>
+            </section>
+    {% else %}
+
+    <body class="font-montserrat text-sm bg-white">
+    <!-- /Left Menu -->
+
+    <!-- Main Content -->
+    <main class="flex-1 py-10 px-5 sm:px-10">
+        <section>
+            <div class="flex items-center justify-between">
+                <span class="underline decoration-2 decoration-red-400 font-semibold text-gray-700 text-base">Catégories</span>
+            </div>
+            <nav class="mt-2 flex space-x-6 text-gray-400 font-medium">
+                {% for category in categories %}
+                    <a href="#" class="hover:text-gray-700">{{ category.name }}</a>
+                {% endfor %}
+            </nav>
+        </section>
+
+        <section class="mt-9">
+            <div class="flex items-center justify-between">
+                <span class="underline decoration-2 decoration-red-400 font-semibold text-gray-700 text-base">Recipes</span>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
+                {% for recipe in recipes %}
+                    {% include 'hub/parts/category/category-card.html.twig' with { recipe: recipe } %}
+                {% endfor %}
+            </div>
+        </section>
+
+        {% if app.user %}
+            <section>
+                <a href="{{ path('app_recipe') }}" class="hover:text-red-600 inline-flex items-center">
+                    <h1 class="text-lg font-medium text-red-600 mt-9 hover:underline hover:decoration-2 hover:decoration-red-400">Add a Recipe</h1>
+                </a>
+            </section>
+        {% endif %}
+
+        <section class="mt-9">
+            <div class="flex items-center justify-between">
+                <span class="underline decoration-2 decoration-red-400 font-semibold text-gray-700 text-base">Ingredient</span>
+            </div>
+            <nav class="mt-2 flex space-x-6 text-gray-400 font-medium">
+                {% for ingredient in ingredients %}
+                    <a class="hover:text-gray-700">{{ ingredient.name }}</a>
+                {% endfor %}
+            </nav>
+        </section>
+
+        {% if app.user %}
+            <section>
+                <a href="" class="hover:text-red-600 inline-flex items-center">
+                    <h1 class="text-lg font-medium text-red-600 mt-9">Add a Ingredient</h1>
+                </a>
+            </section>
+        {% endif %}
+    </main>
+    <!-- /Main Content -->
+
+    <!-- Right Sidebar -->
+    <!-- /Right Sidebar -->
+    </body>
+    </html>
+    {% endif %}
+{% endblock %}
